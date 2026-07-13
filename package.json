@@ -1,0 +1,29 @@
+{
+  "name": "c2pa-signing-demo",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @c2pa-demo/shared && npm run build --workspace @c2pa-demo/api && npm run build --workspace @c2pa-demo/web",
+    "dev": "npm run build --workspace @c2pa-demo/shared && concurrently -n api,web -c blue,green \"npm run dev --workspace @c2pa-demo/api\" \"npm run dev --workspace @c2pa-demo/web\"",
+    "postinstall": "node scripts/install-c2pa-native.mjs",
+    "start": "npm run start --workspace @c2pa-demo/api",
+    "test": "npm run test --workspace @c2pa-demo/api && npm run test --workspace @c2pa-demo/web",
+    "typecheck": "npm run typecheck --workspace @c2pa-demo/shared && npm run typecheck --workspace @c2pa-demo/api && npm run typecheck --workspace @c2pa-demo/web"
+  },
+  "dependencies": {
+    "unzipper": "^0.12.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "typescript": "^6.0.2"
+  }
+}
